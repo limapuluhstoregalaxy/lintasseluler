@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LINTAS - Gadget Tanpa Batas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #000;
+            --secondary-color: #fff;
+            --accent-color: #c0c0c0;
+            --gradient: linear-gradient(135deg, #000 0%, #333 100%);
+            --text-color: #000;
+            --bg-color: #fff;
+            --card-bg: #f9f9f9;
+            --shadow: rgba(0,0,0,0.1);
+        }
+        [data-theme="dark"] {
+            --primary-color: #fff;
+            --secondary-color: #000;
+            --accent-color: #a0a0a0;
+            --gradient: linear-gradient(135deg, #333 0%, #000 100%);
+            --text-color: #fff;
+            --bg-color: #000;
+            --card-bg: #111;
+            --shadow: rgba(255,255,255,0.1);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            color: var(--text-color);
+            background: var(--bg-color);
+            transition: background 0.3s, color 0.3s;
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Navbar */
+        .navbar {
+            position: sticky;
+            top: 0;
+            background: var(--primary-color);
+            color: var(--secondary-color);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px var(--shadow);
+        }
+        .navbar .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        .navbar .menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        .navbar .menu li a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .navbar .menu li a:hover {
+            color: var(--accent-color);
+        }
+        .navbar .right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .navbar .whatsapp {
+            background: #25d366;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .navbar .dark-toggle {
+            background: none;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 0.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        /* Hero */
+        .hero {
+            background: var(--gradient);
+            color: var(--secondary-color);
+            padding: 5rem 2rem;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        .hero .buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .hero button {
+            background: var(--accent-color);
+            color: var(--primary-color);
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+        }
+        .hero button:hover {
+            background: var(--secondary-color);
+            transform: scale(1.05);
+        }
+        /* Brand Description */
+        .brand-desc {
+            padding: 4rem 2rem;
+            background: var(--card-bg);
+            text-align: center;
+        }
+        .brand-desc p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        /* Products */
+        .products {
+            padding: 4rem 2rem;
+            background: var(--bg-color);
+        }
+        .products h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .product-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px var(--shadow);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+        .product-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        .product-card p {
+            font-size: 1.1rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+        .product-card .buttons {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+        .product-card button {
+            background: var(--primary-color);
+            color: var(--secondary-color);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .product-card button:hover {
+            background: var(--accent-color);
+        }
+        /* Tukar Tambah */
+        .tukar-tambah {
+            padding: 4rem 2rem;
+            background: var(--card-bg);
+        }
+        .tukar-tambah h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        .form-group select, .form-group input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--accent-color);
+            border-radius: 5px;
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+        .form-group button {
+            width: 100%;
+            background: var(--primary-color);
+            color: var(--secondary-color);
+            border: none;
+            padding: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        .form-group button:hover {
+            background: var(--accent-color);
+        }
+        .result {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--primary-color);
+            color: var(--secondary-color);
+            border-radius: 5px;
+            display: none;
+        }
+        /* Keunggulan */
+        .keunggulan {
+            padding: 4rem 2rem;
+            background: var(--bg-color);
+        }
+        .keunggulan h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+        .keunggulan-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        .keunggulan-item {
+            text-align: center;
+        }
+        .keunggulan-item svg {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 1rem;
+            fill: var(--primary-color);
+        }
+        .keunggulan-item h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        /* Footer */
+        .footer {
+            background: var(--primary-color);
+            color: var(--secondary-color);
+            padding: 2rem;
+            text-align: center;
+        }
+        .footer p {
+            margin-bottom: 0.5rem;
+        }
+        .footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar .menu {
+                display: none; /* Simple hide for mobile, can add hamburger later */
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .hero .buttons {
+                flex-direction: column;
+            }
+        }
+        /* Toast */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: var(--secondary-color);
+            padding: 1rem;
+            border-radius: 5px;
+            display: none;
+            z-index: 1001;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">LINTAS</div>
+        <ul class="menu">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#produk">Produk</a></li>
+            <li><a href="#tukar-tambah">Tukar Tambah</a></li>
+            <li><a href="#promo">Promo</a></li>
+            <li><a href="#tentang">Tentang Kami</a></li>
+            <li><a href="#kontak">Kontak</a></li>
+        </ul>
+        <div class="right">
+            <a href="https://wa.me/6281288201778" class="whatsapp">WhatsApp</a>
+            <button class="dark-toggle" onclick="toggleDarkMode()">🌙</button>
+        </div>
+    </nav>
+
+    <section id="home" class="hero fade-in">
+        <h1>LINTAS<br>Gadget Tanpa Batas</h1>
+        <p>Upgrade gadget kamu tanpa batas dengan produk original dan harga terbaik.</p>
+        <div class="buttons">
+            <button onclick="scrollToSection('produk')">Lihat Produk</button>
+            <button onclick="scrollToSection('tukar-tambah')">Tukar Tambah Sekarang</button>
+        </div>
+    </section>
+
+    <section class="brand-desc fade-in">
+        <p>“LINTAS menghadirkan teknologi terutama produk Apple dan produk lainnya yang mengutamakan kualitas, keaslian, dan bergaransi dengan pelayanan sederhana, berkelas, dan relevan. Semua bisa didapatkan secara online dengan mudah. LINTAS memenuhi kebutuhan gadget yang kamu inginkan, untuk hidup tanpa batas.”</p>
+    </section>
+
+    <section id="produk" class="products fade-in">
+        <h2>Produk Unggulan</h2>
+        <div class="product-grid">
+            <div class="product-card">
+                <img src="https://via.placeholder.com/300x300?text=iPhone+15+Pro+Max" alt="iPhone 15 Pro Max">
+                <h3>iPhone 15 Pro Max</h3>
+                <p>Rp 18.999.000</p>
+                <div class="buttons">
+                    <button onclick="alert('Beli Sekarang')">Beli Sekarang</button>
+                    <button onclick="scrollToSection('tukar-tambah')">Tukar Tambah</button>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="https://via.placeholder.com/300x300?text=iPhone+15" alt="iPhone 15">
+                <h3>iPhone 15</h3>
+                <p>Rp 13.999.000</p>
+                <div class="buttons">
+                    <button onclick="alert('Beli Sekarang')">Beli Sekarang</button>
+                    <button onclick="scrollToSection('tukar-tambah')">Tukar Tambah</button>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="https://via.placeholder.com/300x300?text=MacBook+Air+M2" alt="MacBook Air M2">
+                <h3>MacBook Air M2</h3>
+                <p>Rp 16.499.000</p>
+                <div class="buttons">
+                    <button onclick="alert('Beli Sekarang')">Beli Sekarang</button>
+                    <button onclick="scrollToSection('tukar-tambah')">Tukar Tambah</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tukar-tambah" class="tukar-tambah fade-in">
+        <h2>Tukar Tambah Gadget</h2>
+        <form id="tukarForm">
+            <div class="form-group">
+                <label for="merk">Merk HP Lama</label>
+                <select id="merk" required>
+                    <option value="">Pilih Merk</option>
+                    <option value="Apple">Apple</option>
+                    <option value="Samsung">Samsung</option>
+                    <option value="Other">Lainnya</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="tipe">Tipe HP</label>
+                <input type="text" id="tipe" placeholder="Contoh: iPhone 14" required>
+            </div>
+            <div class="form-group">
+                <label for="storage">Storage</label>
+                <select id="storage" required>
+                    <option value="">Pilih Storage</option>
+                    <option value="64GB">64GB</option>
+                    <option value="128GB">128GB</option>
+                    <option value="256GB">256GB</option>
+                    <option value="512GB">512GB</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="kondisi">Kondisi</label>
+                <select id="kondisi" required>
+                    <option value="">Pilih Kondisi</option>
+                    <option value="mulus">Mulus</option>
+                    <option value="lecet">Lecet</option>
+                    <option value="minus">Minus</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="hargaPasar">Harga Pasar (Rp)</label>
+                <input type="number" id="hargaPasar" placeholder="Masukkan harga pasar" required>
+            </div>
+            <div class="form-group">
+                <label for="produkBaru">Pilih Produk Baru</label>
+                <select id="produkBaru" required>
+                    <option value="">Pilih Produk</option>
+                    <option value="18999000">iPhone 15 Pro Max - Rp 18.999.000</option>
+                    <option value="13999000">iPhone 15 - Rp 13.999.000</option>
+                    <option value="16499000">MacBook Air M2 - Rp 16.499.000</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <button type="submit">Hitung Estimasi</button>
+            </div>
+        </form>
+        <div id="result" class="result"></div>
+    </section>
+
+    <section class="keunggulan fade-in">
+        <h2>Keunggulan Kami</h2>
+        <div class="keunggulan-grid">
+            <div class="keunggulan-item">
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <h3>100% Original</h3>
+            </div>
+            <div class="keunggulan-item">
+                <svg viewBox="0 0 24 24"><path d="M20 7l-8-4-8 4v10l8 4 8-4V7zM12 6.5l5.5 2.75v5.5L12 17.5l-5.5-2.75v-5.5L12 6.5z"/></svg>
+                <h3>Gratis diantar Se-Bekasi</h3>
+            </div>
+            <div class="keunggulan-item">
+                <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                <h3>Bisa Tukar Tambah</h3>
+            </div>
+            <div class="keunggulan-item">
+                <svg viewBox
